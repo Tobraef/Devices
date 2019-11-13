@@ -24,9 +24,10 @@ namespace ConsoleApp1
         public ScannerUI()
         {
             InitializeComponent();
+            FormClosing += ScannerUI_FormClosing;
             scanPicture.BorderStyle = BorderStyle.FixedSingle;
             manager = new WIA.DeviceManager();
-            foreach(WIA.DeviceInfo device in manager.DeviceInfos)
+            foreach (WIA.DeviceInfo device in manager.DeviceInfos)
             {
                 if (device.Type.Equals(WIA.WiaDeviceType.ScannerDeviceType))
                 {
@@ -36,19 +37,26 @@ namespace ConsoleApp1
             DisableScanButton();
         }
 
+        void ScannerUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            scanner = null;
+            scannerDevice = null;
+            manager = null;
+        }
+
         private void ScanButton_Click(object sender, EventArgs e)
         {
             DisableScanButton();
             WIA.CommonDialog dialog = new WIA.CommonDialog();
-            foreach(WIA.Property property in scanner.Properties)
+            foreach (WIA.Property property in scanner.Properties)
             {
                 if (property.PropertyID.Equals(horizontalPropertyId) && !property.IsReadOnly)
                 {
-                    property.set_Value(trackBarHResolution.Value);
+                    property.set_Value(comboBoxHRes.SelectedItem);
                 }
                 if (property.PropertyID.Equals(verticalPropertyId) && !property.IsReadOnly)
                 {
-                    property.set_Value(trackBarVResolution.Value);
+                    property.set_Value(comboBoxVRes.SelectedItem);
                 }
                 if (property.PropertyID.Equals(colorIntent))
                 {
@@ -66,11 +74,9 @@ namespace ConsoleApp1
                 }
             }
             WIA.ImageFile imageFile = (WIA.ImageFile)dialog.ShowTransfer(scanner, WIA.FormatID.wiaFormatPNG, false);
-            var tempFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
-            imageFile.SaveFile(tempFile);
-            var image = Image.FromFile(tempFile);
-            scanPicture.Image = image;
-            File.Delete(tempFile);
+            var data = (byte[])imageFile.FileData.get_BinaryData();
+            var stream = new MemoryStream(data);
+            scanPicture.Image = new Bitmap(Image.FromStream(stream), scanPicture.Size);
             EnableScanButton();
         }
 
@@ -78,9 +84,9 @@ namespace ConsoleApp1
         {
             scannerDevice = null;
             scanner = null;
-            foreach(WIA.DeviceInfo device in manager.DeviceInfos)
+            foreach (WIA.DeviceInfo device in manager.DeviceInfos)
             {
-                if (device.DeviceID.Equals(devicesBox.SelectedText))
+                if (device.DeviceID.Equals(devicesBox.SelectedItem.ToString()))
                 {
                     scannerDevice = device.Connect();
                     scanner = scannerDevice.Items[1];
@@ -93,33 +99,26 @@ namespace ConsoleApp1
                 DisableScanButton();
                 return;
             }
-            foreach(WIA.Property property in scanner.Properties)
+            foreach (WIA.Property property in scanner.Properties)
             {
-                if(property.PropertyID.Equals(horizontalPropertyId))
+                if (property.PropertyID.Equals(horizontalPropertyId))
                 {
-                    if (property.IsReadOnly)
+                    foreach(var i in property.SubTypeValues)
                     {
-                        Console.WriteLine("HorizontalDPI is read only");
+                        comboBoxHRes.Items.Add(i);
                     }
-                    else
-                    {
-                        trackBarHResolution.Minimum = property.SubTypeMin;
-                        trackBarHResolution.SmallChange = property.SubTypeStep;
-                        trackBarHResolution.Maximum = property.SubTypeMax;
-                    }
+                    // default choose middle resolution
+                    comboBoxHRes.SelectedIndex = comboBoxHRes.Items.Count / 2;
+                    
                 }
                 else if (property.PropertyID.Equals(verticalPropertyId))
                 {
-                    if (property.IsReadOnly)
+                    foreach (var i in property.SubTypeValues)
                     {
-                        Console.WriteLine("VerticalDPI is read only");
+                        comboBoxVRes.Items.Add(i);
                     }
-                    else
-                    {
-                        trackBarVResolution.Minimum = property.SubTypeMin;
-                        trackBarVResolution.SmallChange = property.SubTypeStep;
-                        trackBarVResolution.Maximum = property.SubTypeMax;
-                    }
+                    // default choose middle resolution
+                    comboBoxVRes.SelectedIndex = comboBoxVRes.Items.Count / 2;                
                 }
             }
         }
@@ -145,6 +144,11 @@ namespace ConsoleApp1
                 scanPicture.Image.Save(fileToSave);
                 EnableScanButton();
             }
+        }
+
+        private void ScannerUI_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

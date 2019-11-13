@@ -34,14 +34,13 @@
             this.buttonSaveToFile = new System.Windows.Forms.Button();
             this.textBoxPath = new System.Windows.Forms.TextBox();
             this.labelPath = new System.Windows.Forms.Label();
-            this.trackBarHResolution = new System.Windows.Forms.TrackBar();
-            this.trackBarVResolution = new System.Windows.Forms.TrackBar();
             this.labelHResolution = new System.Windows.Forms.Label();
             this.labelVResolution = new System.Windows.Forms.Label();
             this.checkBoxColor = new System.Windows.Forms.CheckBox();
+            this.comboBoxHRes = new System.Windows.Forms.ComboBox();
+            this.comboBoxVRes = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.scanPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarHResolution)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVResolution)).BeginInit();
             this.SuspendLayout();
             // 
             // scanButton
@@ -65,7 +64,7 @@
             // devicesBox
             // 
             this.devicesBox.FormattingEnabled = true;
-            this.devicesBox.Location = new System.Drawing.Point(22, 21);
+            this.devicesBox.Location = new System.Drawing.Point(22, 31);
             this.devicesBox.Name = "devicesBox";
             this.devicesBox.Size = new System.Drawing.Size(182, 21);
             this.devicesBox.TabIndex = 3;
@@ -97,22 +96,6 @@
             this.labelPath.TabIndex = 6;
             this.labelPath.Text = "Path to save image";
             // 
-            // trackBarHResolution
-            // 
-            this.trackBarHResolution.Location = new System.Drawing.Point(22, 213);
-            this.trackBarHResolution.Maximum = 0;
-            this.trackBarHResolution.Name = "trackBarHResolution";
-            this.trackBarHResolution.Size = new System.Drawing.Size(182, 45);
-            this.trackBarHResolution.TabIndex = 7;
-            // 
-            // trackBarVResolution
-            // 
-            this.trackBarVResolution.Location = new System.Drawing.Point(22, 295);
-            this.trackBarVResolution.Maximum = 0;
-            this.trackBarVResolution.Name = "trackBarVResolution";
-            this.trackBarVResolution.Size = new System.Drawing.Size(182, 45);
-            this.trackBarVResolution.TabIndex = 8;
-            // 
             // labelHResolution
             // 
             this.labelHResolution.AutoSize = true;
@@ -141,16 +124,42 @@
             this.checkBoxColor.Text = "Color";
             this.checkBoxColor.UseVisualStyleBackColor = true;
             // 
+            // comboBoxHRes
+            // 
+            this.comboBoxHRes.FormattingEnabled = true;
+            this.comboBoxHRes.Location = new System.Drawing.Point(22, 213);
+            this.comboBoxHRes.Name = "comboBoxHRes";
+            this.comboBoxHRes.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHRes.TabIndex = 12;
+            // 
+            // comboBoxVRes
+            // 
+            this.comboBoxVRes.FormattingEnabled = true;
+            this.comboBoxVRes.Location = new System.Drawing.Point(22, 295);
+            this.comboBoxVRes.Name = "comboBoxVRes";
+            this.comboBoxVRes.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxVRes.TabIndex = 13;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Choose scanner by ID";
+            // 
             // ScannerUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBoxVRes);
+            this.Controls.Add(this.comboBoxHRes);
             this.Controls.Add(this.checkBoxColor);
             this.Controls.Add(this.labelVResolution);
             this.Controls.Add(this.labelHResolution);
-            this.Controls.Add(this.trackBarVResolution);
-            this.Controls.Add(this.trackBarHResolution);
             this.Controls.Add(this.labelPath);
             this.Controls.Add(this.textBoxPath);
             this.Controls.Add(this.buttonSaveToFile);
@@ -159,9 +168,8 @@
             this.Controls.Add(this.scanButton);
             this.Name = "ScannerUI";
             this.Text = "UI";
+            this.Load += new System.EventHandler(this.ScannerUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.scanPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarHResolution)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVResolution)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,10 +183,11 @@
         private System.Windows.Forms.Button buttonSaveToFile;
         private System.Windows.Forms.TextBox textBoxPath;
         private System.Windows.Forms.Label labelPath;
-        private System.Windows.Forms.TrackBar trackBarHResolution;
-        private System.Windows.Forms.TrackBar trackBarVResolution;
         private System.Windows.Forms.Label labelHResolution;
         private System.Windows.Forms.Label labelVResolution;
         private System.Windows.Forms.CheckBox checkBoxColor;
+        private System.Windows.Forms.ComboBox comboBoxHRes;
+        private System.Windows.Forms.ComboBox comboBoxVRes;
+        private System.Windows.Forms.Label label1;
     }
 }
