@@ -19,6 +19,7 @@ namespace ConsoleApp1
 
         private const int horizontalPropertyId = 6147; // id for horizontalResolution
         private const int verticalPropertyId = 6148;  // id for verticalResolution
+        private const int colorIntent = 6146;
 
         public ScannerUI()
         {
@@ -48,6 +49,20 @@ namespace ConsoleApp1
                 if (property.PropertyID.Equals(verticalPropertyId) && !property.IsReadOnly)
                 {
                     property.set_Value(trackBarVResolution.Value);
+                }
+                if (property.PropertyID.Equals(colorIntent))
+                {
+                    if (!property.IsReadOnly)
+                    {
+                        if (checkBoxColor.Checked)
+                        {
+                            property.set_Value(WIA.WiaImageIntent.ColorIntent);
+                        }
+                        else
+                        {
+                            property.set_Value(WIA.WiaImageIntent.GrayscaleIntent);
+                        }
+                    }
                 }
             }
             WIA.ImageFile imageFile = (WIA.ImageFile)dialog.ShowTransfer(scanner, WIA.FormatID.wiaFormatPNG, false);

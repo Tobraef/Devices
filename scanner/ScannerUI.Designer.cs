@@ -38,6 +38,7 @@
             this.trackBarVResolution = new System.Windows.Forms.TrackBar();
             this.labelHResolution = new System.Windows.Forms.Label();
             this.labelVResolution = new System.Windows.Forms.Label();
+            this.checkBoxColor = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.scanPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHResolution)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVResolution)).BeginInit();
@@ -130,11 +131,22 @@
             this.labelVResolution.TabIndex = 10;
             this.labelVResolution.Text = "Vertical resolution";
             // 
-            // UI
+            // checkBoxColor
+            // 
+            this.checkBoxColor.AutoSize = true;
+            this.checkBoxColor.Location = new System.Drawing.Point(22, 346);
+            this.checkBoxColor.Name = "checkBoxColor";
+            this.checkBoxColor.Size = new System.Drawing.Size(50, 17);
+            this.checkBoxColor.TabIndex = 11;
+            this.checkBoxColor.Text = "Color";
+            this.checkBoxColor.UseVisualStyleBackColor = true;
+            // 
+            // ScannerUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBoxColor);
             this.Controls.Add(this.labelVResolution);
             this.Controls.Add(this.labelHResolution);
             this.Controls.Add(this.trackBarVResolution);
@@ -145,7 +157,7 @@
             this.Controls.Add(this.devicesBox);
             this.Controls.Add(this.scanPicture);
             this.Controls.Add(this.scanButton);
-            this.Name = "UI";
+            this.Name = "ScannerUI";
             this.Text = "UI";
             ((System.ComponentModel.ISupportInitialize)(this.scanPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHResolution)).EndInit();
@@ -167,5 +179,6 @@
         private System.Windows.Forms.TrackBar trackBarVResolution;
         private System.Windows.Forms.Label labelHResolution;
         private System.Windows.Forms.Label labelVResolution;
+        private System.Windows.Forms.CheckBox checkBoxColor;
     }
 }
